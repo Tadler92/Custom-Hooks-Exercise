@@ -4,8 +4,13 @@ import { v1 as uuid } from "uuid";
 
 
 const useAxios = (url, initialState=[]) => {
+
   const [collection, setCollection] = useState(initialState);
-  const addToCollection = async () => {
+  const addToCollection = async (dynamicVariable) => {
+    if (typeof dynamicVariable === 'string') {
+      url = `${url}/${dynamicVariable}/`
+    }
+    
     const response = await axios.get(url);
     setCollection(cards => [...cards, { ...response.data, id: uuid() }]);
   };
